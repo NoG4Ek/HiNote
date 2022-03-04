@@ -17,20 +17,15 @@ class SharedViewModel @Inject constructor(
 ) : ViewModel() {
     val noteList = MutableLiveData<List<Note>>()
     private val storageNoteList = mutableListOf<Note>()
-    private val applyingFilters = mutableListOf<String>()
+    val applyingFilters = MutableLiveData<List<String>>()
 
-    fun applyFilters(filters: List<String>) {
+    fun applyFilters(filters: List<String>, updateFilters: Boolean) {
         if (filters.isEmpty()) {
             noteList.setValue(storageNoteList)
         } else {
             val filNoteList = mutableListOf<Note>()
-            val nFilNoteList = noteList.value!! as MutableList<Note>
 
-            if (applyingFilters.size > filters.size) {
-                nFilNoteList.clearAndAddAll(storageNoteList)
-            }
-
-            for (note in nFilNoteList) {
+            for (note in storageNoteList) {
                 var tagEquals = 0
                 for (tag in note.tags.split(" ")) {
                     for (filter in filters) {
@@ -43,10 +38,11 @@ class SharedViewModel @Inject constructor(
                     filNoteList.add(note)
                 }
             }
-            noteList.setValue(filNoteList)
+            noteList.value = filNoteList
         }
-
-        applyingFilters.clearAndAddAll(filters)
+        if (updateFilters) {
+            applyingFilters.value = filters
+        }
     }
 
     fun readAllNotes() {

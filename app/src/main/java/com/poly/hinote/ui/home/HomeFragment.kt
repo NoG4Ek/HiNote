@@ -33,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val homeViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
@@ -93,11 +93,17 @@ class HomeFragment : Fragment() {
             shareNote()
         }
         inputTagChipAdd.setOnClickListener {
+
+
             val mldInputTagText = MutableLiveData<String>()
             mldInputTagText.observe(viewLifecycleOwner) { tagText ->
                 //chipSuggestionToInput(tagText)
             }
             //callTagMenuDialog(mldInputTagText)
+        }
+
+        sharedViewModel.applyingFilters.observe(viewLifecycleOwner) { filters ->
+            addChipsToFilter(filters)
         }
 
         //Collapse BS interaction
@@ -108,7 +114,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu){
+    override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val itemSearch = menu.findItem(R.id.action_search)
         val itemSettings = menu.findItem(R.id.action_settings)
@@ -189,12 +195,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun initNotes() {
-        homeViewModel.readAllNotes()
-        homeViewModel.noteList.observe(viewLifecycleOwner) { notesList ->
+        if (sharedViewModel.applyingFilters.value == null || sharedViewModel.applyingFilters.value!!.isEmpty()) {
+            sharedViewModel.readAllNotes()
+        }
+        sharedViewModel.noteList.observe(viewLifecycleOwner) { notesList ->
             if (notesList != null) {
                 noteListRecycler = binding.noteListRecycler
                 noteListAdapter =
-                    NoteListAdapter(this.requireContext(), notesList, activity, homeViewModel)
+                    NoteListAdapter(this.requireContext(), notesList, activity, sharedViewModel)
                 noteListRecycler.layoutManager = LinearLayoutManager(this.requireContext())
                 noteListRecycler.adapter = noteListAdapter
             }
@@ -223,7 +231,7 @@ class HomeFragment : Fragment() {
         }
 
         if (checkRequiredFields) {
-            homeViewModel.addNote(
+            sharedViewModel.addNote(
                 Note(
                     Util.curTime,
                     noteHeaderText,
@@ -248,20 +256,19 @@ class HomeFragment : Fragment() {
         inputTagChipGroup.addView(inputChip, inputTagChipGroup.childCount - 1)
     }
 
-    private fun chipSuggestionToFilter(tagText: String) {
-        val filterTagChipGroup =
-            requireActivity().findViewById<ChipGroup>(R.id.filter_tag_chip_group)
-        val filterChip =
-            layoutInflater.inflate(R.layout.chip_input, filterTagChipGroup, false) as Chip
-        filterChip.isCheckable = false
-        filterChip.text = tagText
-        filterChip.setOnCloseIconClickListener {
-            filterTagChipGroup.removeView(filterChip)
-            homeViewModel.applyFilters(
-                filterTagChipGroup.children.toList().map { view -> (view as Chip).text.toString() })
+    private fun addChipsToFilter(tags: List<String>) {
+        tags.forEach { tagText ->
+            val filterTagChipGroup = binding.filterTagChipGroup
+            val filterChip =
+                layoutInflater.inflate(R.layout.chip_input, filterTagChipGroup, false) as Chip
+            filterChip.isCheckable = false
+            filterChip.text = tagText
+            filterChip.setOnCloseIconClickListener {
+                filterTagChipGroup.removeView(filterChip)
+                sharedViewModel.applyFilters(filterTagChipGroup.children.toList()
+                    .map { view -> (view as Chip).text.toString() }, false)
+            }
+            filterTagChipGroup.addView(filterChip)
         }
-        filterTagChipGroup.addView(filterChip)
-        homeViewModel.applyFilters(
-            filterTagChipGroup.children.toList().map { view -> (view as Chip).text.toString() })
     }
 }
