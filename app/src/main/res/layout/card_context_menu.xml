@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Theme.Material3.DayNight.Dialog.Alert"
+    android:id="@+id/card_context_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/card_context_share"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_black"
+        android:text="Share"
+        android:textColor="?attr/colorOnBackground"
+        app:icon="@drawable/ic_card_context_share"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toTopOf="@id/card_context_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+    </Button>
+
+    <Button
+        android:id="@+id/card_context_delete"
+        style="@style/Widget.Material3.Button.TextButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_black"
+        android:text="Delete"
+        android:textColor="?attr/colorOnBackground"
+        app:icon="@drawable/ic_card_context_delete"
+        app:iconTint="?attr/colorOnBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_context_share">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

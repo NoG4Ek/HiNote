@@ -1,0 +1,7 @@
+<resources>
+    <attr name="colorPurple" format="color" />
+    <attr name="colorOnPurple" format="color" />
+    <attr name="colorPurpleContainer" format="color" />
+    <attr name="colorOnPurpleContainer" format="color" />
+    <attr name="harmonizePurple" format="boolean" />
+</resources>

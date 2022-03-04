@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List of TextView -->
+    <style name="Theme.HiNote.TextView.Header" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/nunito_black</item>
+    </style>
+    <style name="Theme.HiNote.TextView.Tag" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/nunito_extra_light_italic</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Theme.HiNote.TextView.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/nunito_regular</item>
+    </style>
+
+
+    <style name="Theme.HiNote.Font.TextInputEditText" parent="Base.Widget.MaterialComponents.TextInputEditText">
+        <item name="fontFamily">@font/nunito_regular</item>
+    </style>
+    <style name="Theme.HiNote.TextInputEditText.Content" parent="Base.Widget.MaterialComponents.TextInputEditText">
+        <item name="fontFamily">@font/nunito_regular</item>
+    </style>
+
+    <style name="Theme.HiNote.CardContextDialog" parent="MaterialAlertDialog.Material3">
+        <item name="windowMinWidthMajor">200dp</item>
+        <item name="windowMinWidthMinor">200dp</item>
+        <item name="android:width">200dp</item>
+    </style>
+
+</resources>

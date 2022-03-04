@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_at_sign"
+        android:title="filter"
+        android:contentDescription="filter"
+        app:showAsAction="ifRoom"
+        tools:ignore="Autofill"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="search"
+        android:contentDescription="search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView"
+        tools:ignore="Autofill"
+        android:visible="false"
+        />
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        android:visible="true"/>
+
+</menu>
